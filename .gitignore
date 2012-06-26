@@ -1,5 +1,6 @@
 .deps
 .libs
+.DS_Store
 INSTALL
 Makefile
 Makefile.in
@@ -16,6 +17,7 @@ platform/config/
 platform/doc/html/
 platform/doc/pion-platform.tag
 platform/server/pion
+platform/server/pion.log
 platform/tests/Pion*Tests
 platform/tests/config/*.xml
 platform/tests/config/*.bak
