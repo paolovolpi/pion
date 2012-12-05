@@ -19,6 +19,10 @@
 #include <boost/exception/info.hpp>
 #include <boost/exception/error_info.hpp>
 #include <boost/exception/get_error_info.hpp>
+#if (BOOST_VERSION <= 104200)
+    #include <boost/units/quantity.hpp>
+    #include <boost/units/detail/utility.hpp>
+#endif
 #include <pion/config.hpp>
 
 
