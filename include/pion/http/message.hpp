@@ -540,6 +540,18 @@ protected:
             write_buffers.push_back(boost::asio::buffer(i->second));
             write_buffers.push_back(boost::asio::buffer(STRING_CRLF));
         }
+
+        // add Cookies by Paolo
+
+        ihash_multimap::const_iterator iend =  m_cookie_params.end();
+        for (ihash_multimap::const_iterator i = m_cookie_params.begin(); i != iend; ++i)
+        {
+             write_buffers.push_back(boost::asio::buffer(HEADER_COOKIE));
+             write_buffers.push_back(boost::asio::buffer(HEADER_NAME_VALUE_DELIMITER));
+             write_buffers.push_back(boost::asio::buffer(i->first + "=" + i->second));
+             write_buffers.push_back(boost::asio::buffer(STRING_CRLF));
+        }
+        
         // add an extra CRLF to end HTTP headers
         write_buffers.push_back(boost::asio::buffer(STRING_CRLF));
     }
