@@ -333,6 +333,13 @@ public:
         memcpy(m_content_buf.get(), content.c_str(), content.size());
     }
 
+    inline void set_content(boost::scoped_array<char>& content,
+                            boost::uint64_t length)
+    {
+        m_content_buf.swap(content, length);
+        m_content_length = length;
+    }
+    
     /// clears payload content buffer
     inline void clear_content(void) {
         set_content_length(0);
@@ -462,7 +469,17 @@ protected:
                 memcpy(get(), buf.get(), buf.size());
             }
         }
-
+        /// swap
+        inline void swap(boost::scoped_array<char>& buf, std::size_t len)
+        {
+            m_buf.swap(buf);
+            m_len = len;
+            if (len == 0)
+                m_ptr = &m_empty;
+            else
+                m_ptr = m_buf.get();
+        }
+        
         /// assignment operator
         content_buffer_t& operator=(const content_buffer_t& buf) {
             if (buf.size()) {
