@@ -52,6 +52,7 @@ struct PION_API types
     static const std::string    HEADER_USER_AGENT;
     static const std::string    HEADER_X_FORWARDED_FOR;
     static const std::string    HEADER_CLIENT_IP;
+    static const std::string    HEADER_ACCEPT_ENCODING;
 
     // common HTTP content types
     static const std::string    CONTENT_TYPE_HTML;

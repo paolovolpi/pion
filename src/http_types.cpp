@@ -44,6 +44,7 @@ const std::string   types::HEADER_REFERER("Referer");
 const std::string   types::HEADER_USER_AGENT("User-Agent");
 const std::string   types::HEADER_X_FORWARDED_FOR("X-Forwarded-For");
 const std::string   types::HEADER_CLIENT_IP("Client-IP");
+const std::string   types::HEADER_ACCEPT_ENCODING("Accept-Encoding");
 
 // common HTTP content types
 const std::string   types::CONTENT_TYPE_HTML("text/html");
