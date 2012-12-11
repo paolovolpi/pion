@@ -184,6 +184,13 @@ public:
         std::string set_cookie_header(make_set_cookie_header(name, "", path, true, 0));
         add_header(HEADER_SET_COOKIE, set_cookie_header);
     }
+
+    /// remove all set-cookie from the message with value starting with 'name'
+    /// e.g. Set-Cookie SESSIONID=0xa1fbc will be deleted calling delete_set_cookie("SESSIONID")
+    inline void delete_set_cookie(const std::string& name)
+    {
+        delete_header_withvalue(HEADER_SET_COOKIE, name);
+    }
     
     /// sets the time that the response was last modified (Last-Modified)
     inline void set_last_modified(const unsigned long t) {

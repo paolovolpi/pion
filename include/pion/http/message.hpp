@@ -367,6 +367,10 @@ public:
         delete_value(m_headers, key);
     }
 
+    inline void delete_header_withvalue(const std::string& key, const std::string& value) {
+        delete_value(m_headers, key, value);
+    }
+
     /// returns true if the HTTP connection may be kept alive
     inline bool check_keep_alive(void) const {
         return (get_header(HEADER_CONNECTION) != "close"
@@ -637,6 +641,32 @@ protected:
             result_pair = dict.equal_range(key);
         if (result_pair.first != dict.end())
             dict.erase(result_pair.first, result_pair.second);
+    }
+
+    /**
+     * Deletes all values starting with 'value' for a key
+     *
+     * @param dict the dictionary object to update
+     * @param key the key to delete
+     */
+    template <typename DictionaryType>
+    inline static void delete_value(DictionaryType& dict,
+                                   const std::string& key,
+                                   const std::string& value)
+    {
+        // retrieve all current values for key
+        std::pair<typename DictionaryType::iterator, typename DictionaryType::iterator>
+            result_pair = dict.equal_range(HEADER_SET_COOKIE);
+
+        std::locale loc;
+        for(; result_pair.first != result_pair.second; ++(result_pair.first))
+        {
+            if (std::toupper(result_pair.first->second, loc).find(std::toupper(value, loc)) == 0)
+            {
+                dict.erase(result_pair.first);
+                return;
+            }
+        }
     }
 
     /// erases the string containing the first line for the HTTP message
