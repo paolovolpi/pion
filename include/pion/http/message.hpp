@@ -561,21 +561,18 @@ protected:
             write_buffers.push_back(boost::asio::buffer(i->second));
             write_buffers.push_back(boost::asio::buffer(STRING_CRLF));
         }
-
-        // add Cookies by Paolo
-
-        ihash_multimap::const_iterator iend =  m_cookie_params.end();
-        for (ihash_multimap::const_iterator i = m_cookie_params.begin(); i != iend; ++i)
-        {
-             write_buffers.push_back(boost::asio::buffer(HEADER_COOKIE));
-             write_buffers.push_back(boost::asio::buffer(HEADER_NAME_VALUE_DELIMITER));
-             write_buffers.push_back(boost::asio::buffer(i->first + "=" + i->second));
-             write_buffers.push_back(boost::asio::buffer(STRING_CRLF));
-        }
-        
+        // add cookie headers
+        append_cookie_headers(write_buffers);
         // add an extra CRLF to end HTTP headers
         write_buffers.push_back(boost::asio::buffer(STRING_CRLF));
     }
+
+    /**
+     * appends the HTTP headers for cookies to a vector of write buffers
+     *
+     * @param write_buffers the buffers to append HTTP headers into
+     */
+    virtual void append_cookie_headers(write_buffers_t& write_buffers) {}
 
     /**
      * Returns the first value in a dictionary if key is found; or an empty
@@ -678,7 +675,6 @@ protected:
 
     /// updates the string containing the first line for the HTTP message
     virtual void update_first_line(void) const = 0;
-
 
     /// first line sent in an HTTP message
     /// (i.e. "GET / HTTP/1.1" for request, or "HTTP/1.1 200 OK" for response)
