@@ -19,6 +19,7 @@
 #include <boost/exception/info.hpp>
 #include <boost/exception/error_info.hpp>
 #include <boost/exception/get_error_info.hpp>
+//This in the upstream was removed
 #if (BOOST_VERSION <= 104200)
     #include <boost/units/quantity.hpp>
     #include <boost/units/detail/utility.hpp>
