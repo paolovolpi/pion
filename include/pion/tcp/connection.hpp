@@ -151,20 +151,33 @@ public:
     inline void close(void) {
         if (is_open()) {
             try {
+
                 // shutting down SSL will wait forever for a response from the remote end,
                 // which causes it to hang indefinitely if the other end died unexpectedly
                 // if (get_ssl_flag()) m_ssl_socket.shutdown();
+
+                // windows seems to require this otherwise it doesn't
+                // recognize that connections have been closed
                 m_ssl_socket.next_layer().shutdown(boost::asio::ip::tcp::socket::shutdown_both);
-            } catch (...) {}
+                
+            } catch (...) {}    // ignore exceptions
+            
+            // close the underlying socket (ignore errors)
             boost::system::error_code ec;
             m_ssl_socket.next_layer().close(ec);
         }
     }
 
-	/// cancels any asynchronous operations pending on the socket
-	/// WARNING: Use close instead; basic_socket::cancel doesn't work on Windows pre-Vista!
+    /// cancels any asynchronous operations pending on the socket.
+    /// there is no good way to do this on windows until vista or later (0x0600)
+    /// see http://www.boost.org/doc/libs/1_53_0/doc/html/boost_asio/reference/basic_stream_socket/cancel/overload2.html
+    /// note that the asio docs are misleading because close() is not thread-safe,
+    /// and the suggested #define statements cause WAY too much trouble and heartache
     inline void cancel(void) {
-        m_ssl_socket.next_layer().cancel();
+#if !defined(_MSC_VER) || (_WIN32_WINNT >= 0x0600)
+        boost::system::error_code ec;
+        m_ssl_socket.next_layer().cancel(ec);
+#endif
     }
     
     /// virtual destructor
