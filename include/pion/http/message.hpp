@@ -19,6 +19,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/regex.hpp>
+#include <boost/algorithm/string.hpp>
+#include <boost/range/adaptor/sliced.hpp>
 #include <pion/config.hpp>
 #include <pion/http/types.hpp>
 
@@ -689,13 +691,16 @@ protected:
         std::pair<typename DictionaryType::iterator, typename DictionaryType::iterator>
             result_pair = dict.equal_range(HEADER_SET_COOKIE);
 
-        std::locale loc;
-        for(; result_pair.first != result_pair.second; ++(result_pair.first))
+        while(result_pair.first != result_pair.second)
         {
-            if (std::toupper(result_pair.first->second, loc).find(std::toupper(value, loc)) == 0)
+            if(boost::algorithm::iequals(result_pair.first->second | boost::adaptors::sliced(0, value.length()),
+                                         value))
             {
-                dict.erase(result_pair.first);
-                return;
+                result_pair.first = dict.erase(result_pair.first);
+            }
+            else
+            {
+                ++(result_pair.first);
             }
         }
     }
