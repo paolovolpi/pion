@@ -689,7 +689,7 @@ protected:
     {
         // retrieve all current values for key
         std::pair<typename DictionaryType::iterator, typename DictionaryType::iterator>
-            result_pair = dict.equal_range(HEADER_SET_COOKIE);
+            result_pair = dict.equal_range(key);
 
         while(result_pair.first != result_pair.second)
         {
