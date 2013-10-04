@@ -24,6 +24,10 @@
 #include <pion/config.hpp>
 #include <pion/http/types.hpp>
 
+#ifndef BOOST_SYSTEM_NOEXCEPT
+    #define BOOST_SYSTEM_NOEXCEPT BOOST_NOEXCEPT
+#endif
+
 
 namespace pion {    // begin namespace pion
 	
@@ -60,7 +64,7 @@ public:
         : public boost::system::error_category
     {
         virtual ~receive_error_t() {}
-        virtual inline const char *name() const { return "receive_error_t"; }
+        virtual inline const char *name() const BOOST_SYSTEM_NOEXCEPT { return "receive_error_t"; }
         virtual inline std::string message(int ev) const {
             std::string result;
             switch(ev) {
