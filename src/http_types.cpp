@@ -135,7 +135,7 @@ std::string types::make_set_cookie_header(const std::string& name,
     std::string set_cookie_header(name);
     set_cookie_header += "=";
     set_cookie_header += value;
-    set_cookie_header += "\"; Version=1";
+    set_cookie_header += "; Version=1";
     if (! path.empty()) {
         set_cookie_header += "; Path=";
         set_cookie_header += path;
