@@ -20,6 +20,10 @@
 #include <pion/spdy/types.hpp>
 #include <pion/spdy/decompressor.hpp>
 
+#ifndef BOOST_SYSTEM_NOEXCEPT
+    #define BOOST_SYSTEM_NOEXCEPT BOOST_NOEXCEPT
+#endif
+
 
 namespace pion {    // begin namespace pion
 namespace spdy {    // begin namespace spdy
@@ -48,7 +52,7 @@ public:
         : public boost::system::error_category
     {
     public:
-        const char *name() const { return "SPDYParser"; }
+        const char *name() const BOOST_SYSTEM_NOEXCEPT { return "SPDYParser"; }
         std::string message(int ev) const {
             switch (ev) {
                 case ERROR_INVALID_SPDY_FRAME:
