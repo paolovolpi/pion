@@ -55,7 +55,7 @@ if test "x$unordered_map_type" = "xtr1_unordered_map"; then
 	# test to make sure it's good enough
 	AC_MSG_CHECKING(if unordered_map is ok)
 	AC_TRY_LINK([#include <tr1/unordered_map>],[
-		#if defined(__APPLE__)
+		#if defined(__APPLE__) && (!defined(__apple_build_version__) || __apple_build_version__ < 5000000)
 			#error completely broken on OSX, even for gcc 4.2
 		#elif !defined(__GNUC__) || (__GNUC__ > 4) || (__GNUC__ == 4 && __GNUC_MINOR__ >= 1)
 			return(0);
@@ -167,7 +167,7 @@ if test "x_$openssl_location" != "x_no"; then
 	AC_CHECK_HEADERS([openssl/ssl.h],,AC_MSG_ERROR([Unable to find the OpenSSL headers]))
 	# Check for OpenSSL library
 	LIBS_SAVED="$LIBS"
-	LIBS="$LIBS_SAVED -lssl -lcrypto"
+	LIBS="-lssl -lcrypto $LIBS_SAVED"
 	AC_MSG_CHECKING(linking with openssl)
 	AC_TRY_LINK([#include <openssl/ssl.h>],[ SSL_library_init(); return(0); ],
 		[ AC_MSG_RESULT(ok) ],

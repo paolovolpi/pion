@@ -387,8 +387,6 @@ unsigned char resp2_frame6[] = {
 0x6d, 0x6c, 0x3e, 0x0a, 0x0a, 0x0a };
 
 const unsigned char request_data_bad[] = { 'G', 'E', 'T', ' ', '/', ' ', 'B', 'L', 'A', 'H' };
-<<<<<<< HEAD
-=======
 
 const unsigned char chunked_request_with_semicolon[] = { 
 'P', 'O', 'S', 'T', ' ', '/', 'r', 'e', 's', 'o', 'u', 'r', 'c', 'e', '1', ' ', 'H', 'T', 'T', 'P', '/', '1', '.', '1', 0x0D, 0x0A,
@@ -413,4 +411,3 @@ const unsigned char chunked_request_with_error_in_footers[] = {
 's', 'o', 'm', 'e', '-', 'f', 'o', 'o', 't', 'e', 'r', ':', ' ', 's', 'o', 'm', 'e', '-', 'v', 'a', 'l', 'u', 'e', 0x0D, 0x0A,  
 'a', 'n', 'o', 't', 'h', 'e', 'r', '-', 'f', 'o', 'o', 't', 'e', 'r', 0x0D, 0x0A, 
 0x0D, 0x0A};  
->>>>>>> upstream/develop
